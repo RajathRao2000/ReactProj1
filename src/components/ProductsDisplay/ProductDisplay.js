@@ -1,42 +1,105 @@
-import Button from "../UI/Button";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const ProductDisplay = (props) => {
-    console.log(props)
+  const [products, setProducts] = useState([]);
 
-    const[products,setProducts]=useState("")
+  const deleteProduct = (id) => {
+    localStorage.removeItem(id);
 
-    const deleteProduct=(e)=>{
-        e.preventDefault();
-        console.log(e)
-        console.log(e.target.previousSibling.data)
-        localStorage.removeItem(e.target.previousSibling.data)
-        renderList()
-    }
+    setProducts((prevProducts) =>
+      prevProducts.filter((product) => product.id !== id)
+    );
+  };
 
-    const renderList=()=>{
-        let list = [];
+  useEffect(() => {
+    const fetchData = () => {
+      let list = [];
+      Object.keys(localStorage).forEach((ele) => {
+        let temp = JSON.parse(localStorage.getItem(ele));
+        list.push({
+          id: ele,
+          price: temp.price,
+          value: temp.value,
+          categories: temp.categories,
+        });
+      });
+      setProducts(list);
+    };
 
-        Object.keys(localStorage).forEach((ele) => {
-            let temp = JSON.parse(localStorage.getItem(ele));
-            list.push(
-              <li key={temp.id}>
-                {temp.price}-{temp.value}-{temp.id}
-                <Button type="button" label="Delete Product" onClick={(e)=>deleteProduct(e)}/>
-              </li>
-            );
-          });
-          setProducts(list)
-    }
-
-    useEffect(()=>{
-        renderList()
-    },[products])
-
+    fetchData();
+  }, [props]);
 
   return (
     <>
-      <ul>{products.length !== 0 ? products : "No data found"}</ul>
+      <h2>Electronics</h2>
+      <ul>
+        {products.length !== 0 ? (
+          products.map((product) => {
+            let temp = [];
+            console.log(product)
+            if (product.categories == "electronics") {
+              temp.push(
+                <li key={product.id}>
+                  {product.price}-{product.value}-{product.id}
+                  <button onClick={() => deleteProduct(product.id)}>
+                    Delete btn
+                  </button>
+                </li>
+              );
+            }
+            return temp;
+          })
+        ) : (
+          <p>No data found</p>
+        )}
+      </ul>
+
+      <h2>Food</h2>
+      <ul>
+        {products.length !== 0 ? (
+          products.map((product) => {
+            let temp = [];
+            console.log(product)
+            if (product.categories == "food") {
+              temp.push(
+                <li key={product.id}>
+                  {product.price}-{product.value}-{product.id}
+                  <button onClick={() => deleteProduct(product.id)}>
+                    Delete btn
+                  </button>
+                </li>
+              );
+            }
+            return temp;
+          })
+        ) : (
+          <p>No data found</p>
+        )}
+      </ul>
+
+      <h2>Skincare</h2>
+      <ul>
+        {products.length !== 0 ? (
+          products.map((product) => {
+            let temp = [];
+            console.log(product)
+            if (product.categories == "skincare") {
+              temp.push(
+                <li key={product.id}>
+                  {product.price}-{product.value}-{product.id}
+                  <button onClick={() => deleteProduct(product.id)}>
+                    Delete btn
+                  </button>
+                </li>
+              );
+            }
+            return temp;
+          })
+        ) : (
+          <p>No data found</p>
+        )}
+      </ul>
+
     </>
   );
 };

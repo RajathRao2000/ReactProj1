@@ -4,8 +4,9 @@ import Input from "../UI/Input";
 const Form = (props) => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
-
+    console.log(e)
     let data = {
+      categories: e.target[3].value,
       value: e.target[2].value,
       price: e.target[1].value,
       id: e.target[0].value,
@@ -15,7 +16,7 @@ const Form = (props) => {
       return;
     }
     localStorage.setItem(data.id, JSON.stringify(data));
-    props.onSubmit(data)
+    props.onSubmit(data);
   };
 
   return (
@@ -28,6 +29,12 @@ const Form = (props) => {
         <Input id="id" label="Product Id: " type="text" />
         <Input id="sellingPrice" label="Selling Price: " type="text" />
         <Input id="productName" label="Product Name: " type="text" />
+        <label htmlFor="categories">Categories: </label>
+        <select name="categories" id="categories">
+          <option value="electronics">Electronics</option>
+          <option value="food">Food</option>
+          <option value="skincare">Skincare</option>
+        </select>
         <Button type="submit" label="Add Product" />
       </form>
     </>
