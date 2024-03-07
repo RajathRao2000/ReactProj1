@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-
+import Button from "../UI/Button";
+import styles from "./productDisplay.module.css"
 const ProductDisplay = (props) => {
   const [products, setProducts] = useState([]);
+  
 
   const deleteProduct = (id) => {
     localStorage.removeItem(id);
@@ -30,7 +32,7 @@ const ProductDisplay = (props) => {
   }, [props]);
 
   return (
-    <>
+    <div className={styles.productListContainer}>
       <h2>Electronics</h2>
       <ul>
         {products.length !== 0 ? (
@@ -41,9 +43,7 @@ const ProductDisplay = (props) => {
               temp.push(
                 <li key={product.id}>
                   {product.price}-{product.value}-{product.id}
-                  <button onClick={() => deleteProduct(product.id)}>
-                    Delete btn
-                  </button>
+                  <Button className={styles.button} type="button" label="Delete Product" onClick={() => deleteProduct(product.id)} />
                 </li>
               );
             }
@@ -64,9 +64,7 @@ const ProductDisplay = (props) => {
               temp.push(
                 <li key={product.id}>
                   {product.price}-{product.value}-{product.id}
-                  <button onClick={() => deleteProduct(product.id)}>
-                    Delete btn
-                  </button>
+                  <Button className={styles.button} type="button" label="Delete Product" onClick={() => deleteProduct(product.id)} />
                 </li>
               );
             }
@@ -87,9 +85,7 @@ const ProductDisplay = (props) => {
               temp.push(
                 <li key={product.id}>
                   {product.price}-{product.value}-{product.id}
-                  <button onClick={() => deleteProduct(product.id)}>
-                    Delete btn
-                  </button>
+                  <Button className={styles.button} type="button" label="Delete Product" onClick={() => deleteProduct(product.id)} />
                 </li>
               );
             }
@@ -100,7 +96,7 @@ const ProductDisplay = (props) => {
         )}
       </ul>
 
-    </>
+    </div>
   );
 };
 
